@@ -1,8 +1,7 @@
 #!/usr/bin/env python2.7
 
 """
-Columbia W4111 Intro to databases
-Example webserver
+
 
 To run locally
 
@@ -727,23 +726,15 @@ def search_flight_date():
     args = (dep_airport, arr_airport)
     count = 0
     q = "SELECT A.user_id, max(S.count) FROM Account A LEFT OUTER JOIN Search S ON A.user_id = S.user_id WHERE A.user_id =%s GROUP BY A.user_id"
-    print "571"
     cursor = g.conn.execute(q,(user_id))
-    print "573"
     for ids_with_counts in cursor:
-        print "575"
-        print count
-        print ids_with_counts
         if(ids_with_counts[1]==None):
-            print "line 579"
             count =0
         else:
             count = int(ids_with_counts[1])
         
-        print "577"
     word =""
     cursor.close()
-    print "574"
     #  print args
     q = "SELECT Hd.flight_number, AVG(Hd.time_cost) AS average_delay_time FROM Hasdelay Hd, FlightInfo F WHERE F.dep_airport = %s AND F.arr_airport = %s AND F.flight_number = Hd.flight_number GROUP BY Hd.flight_number ORDER BY AVG(Hd.time_cost);"
     
@@ -767,7 +758,6 @@ def search_flight_date():
         if names == []:
           return render_template("not_found.html")
         context = dict(data = names)
-        print "538"
         print login_id
         search = (login_id, repr(word),count+1)
         q = "INSERT INTO Search VALUES (%s, %s,%s);"
